@@ -11,8 +11,8 @@ extension HomeView {
     class Observed: ObservableObject {
         @Published var characters = Characters()
         
-        func fetchCharacters(completion: (Error?) -> ()) {
-            guard let url = URL(string: "https://rickandmortyapi.com/api/character") else { return }
+        func fetchCharacters(url: String, completion: (Error?) -> ()) {
+            guard let url = URL(string: url) else { return }
             
             let task = URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data = data, error == nil else { return }

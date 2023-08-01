@@ -102,9 +102,9 @@
 		F13579D12A70154400FE2ECF /* RickAndMortyFacts */ = {
 			isa = PBXGroup;
 			children = (
+				F16C82D12A797792006048C9 /* Home */,
 				F16C82DA2A79792F006048C9 /* Characters */,
 				F16C82D62A7977BB006048C9 /* Resources */,
-				F16C82D12A797792006048C9 /* Home */,
 				F13579D22A70154400FE2ECF /* RickAndMortyFactsApp.swift */,
 				F13579D62A70154600FE2ECF /* Assets.xcassets */,
 				F13579D82A70154600FE2ECF /* Preview Content */,

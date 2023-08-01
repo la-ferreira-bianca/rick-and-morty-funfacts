@@ -9,27 +9,45 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var observed = Observed()
+    @State private var pageURL = "https://rickandmortyapi.com/api/character"
+    
     var body: some View {
-        VStack {
-            List(observed.characters.results, id: \.id) { character in
-                NavigationLink {
+        NavigationView {
+            VStack {
+                List(observed.characters.results, id: \.id) { character in
+                    NavigationLink {
+                        CharactersDetails(character: .constant(character))
+                    } label: {
+                        CharacterRow(
+                            name: .constant(character.name),
+                            iconURL: .constant(character.image)
+                        )
+                    }
+                }
+                HStack {
+                    Button("Previous Page") {
+                        guard let url = observed.characters.info.prev else { return }
+                        pageURL = url
+                        fetchCharacters(url: url)
+                    }
                     
-                } label: {
-                    CharacterRow(
-                        name: .constant(character.name),
-                        iconURL: .constant(character.image)
-                    )
+                    Button("Next Page") {
+                        guard let url = observed.characters.info.next else { return }
+                        pageURL = url
+                        fetchCharacters(url: url)
+                    }
                 }
             }
+            .onAppear {
+                fetchCharacters(url: pageURL)
+            }
         }
-        .onAppear {
-            fetchCharacter()
-        }
+        
     }
     
-    func fetchCharacter() {
-        observed.fetchCharacters { error in
-            print(error?.localizedDescription)
+    func fetchCharacters(url: String) {
+        observed.fetchCharacters(url: url) { error in
+            print(error?.localizedDescription ?? "")
         }
     }
 }

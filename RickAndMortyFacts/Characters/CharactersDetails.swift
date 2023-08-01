@@ -11,8 +11,19 @@ struct CharactersDetails: View {
     @Binding var character: Character
     var body: some View {
         VStack {
-            Text(character.name)
-            Text(character.status)
+            AsyncImage(url: URL(string: character.image))
+            
+            
+            HStack {
+                Text(character.name)
+                    .font(.title)
+                
+                Image(character.status == "Alive" ? "alive-icon" : "dead-icon")
+                    .resizable()
+                    .frame(width: 10, height: 10)
+                Text(character.status)
+            }
+            
             Text(character.species)
             Text(character.gender)
             Text(character.created)
