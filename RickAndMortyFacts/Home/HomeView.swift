@@ -11,19 +11,33 @@ struct HomeView: View {
     @StateObject private var observed = Observed()
     @State private var pageURL = "https://rickandmortyapi.com/api/character"
     
+    private let addaptiveColumns = [
+        GridItem(.adaptive(minimum: 170))
+    ]
+    
     var body: some View {
         NavigationView {
             VStack {
-                List(observed.characters.results, id: \.id) { character in
-                    NavigationLink {
-                        CharactersDetails(character: .constant(character))
-                    } label: {
-                        CharacterRow(
-                            name: .constant(character.name),
-                            iconURL: .constant(character.image)
-                        )
+                Text("Rick and Morty Funny Fucking Facts")
+                    .font(.title2)
+                    .padding(.top)
+                
+                ScrollView {
+                    LazyVGrid(columns: addaptiveColumns, spacing: 20) {
+                        ForEach(observed.characters.results, id: \.id) { character in
+                            NavigationLink {
+                                CharactersDetails(character: .constant(character))
+                            } label: {
+                                CharacterRow(
+                                    name: .constant(character.name),
+                                    iconURL: .constant(character.image)
+                                )
+                                .frame(width: 170, height: 170)
+                            }
+                        }
                     }
                 }
+                
                 HStack {
                     Button("Previous Page") {
                         guard let url = observed.characters.info.prev else { return }
