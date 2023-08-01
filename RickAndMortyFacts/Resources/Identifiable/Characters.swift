@@ -1,13 +1,20 @@
 //
-//  CaractersModel.swift
-//  RickAndMortyFacts
+//  Characters.swift
+//  RickAndMortyFunFacts
 //
-//  Created by Bianca Ferreira on 25/07/23.
+//  Created by Bianca Ferreira on 01/08/23.
 //
 
-struct RickAndMortyResponse: Codable {
+import SwiftUI
+
+struct Characters: Codable {
     let info: Info
     let results: [Character]
+    
+    init(info: Info? = nil, results: [Character]? = nil) {
+        self.info = info ?? .init(count: 0, pages: 0, next: nil, prev: nil)
+        self.results = results ?? []
+    }
 }
 
 struct Info: Codable {
