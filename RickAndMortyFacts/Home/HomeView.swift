@@ -11,9 +11,14 @@ struct HomeView: View {
     @StateObject private var observed = Observed()
     var body: some View {
         VStack {
-            List {
-                ForEach(observed.characters.results) { character in
-                    CharacterRow(character: .constant(character))
+            List(observed.characters.results, id: \.id) { character in
+                NavigationLink {
+                    
+                } label: {
+                    CharacterRow(
+                        name: .constant(character.name),
+                        iconURL: .constant(character.image)
+                    )
                 }
             }
         }
