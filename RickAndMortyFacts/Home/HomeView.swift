@@ -9,59 +9,56 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var observed = Observed()
-    @State private var pageURL = "https://rickandmortyapi.com/api/character"
+    @State var selectedPage = 1
     
     private let addaptiveColumns = [
         GridItem(.adaptive(minimum: 170))
     ]
     
+    
     var body: some View {
         NavigationView {
             VStack {
-                Text("Rick and Morty Funny Fucking Facts")
+                Text("Rick And Morty Fucking Fun Facts")
                     .font(.title2)
                     .padding(.top)
                 
-                ScrollView {
-                    LazyVGrid(columns: addaptiveColumns, spacing: 20) {
-                        ForEach(observed.characters.results, id: \.id) { character in
-                            NavigationLink {
-                                CharactersDetails(character: .constant(character))
-                            } label: {
-                                CharacterRow(
-                                    name: .constant(character.name),
-                                    iconURL: .constant(character.image)
-                                )
-                                .frame(width: 170, height: 170)
-                            }
-                        }
+                TabView(selection: $selectedPage) {
+                    ForEach(1..<43) { item in
+                        CarrosellView(page: item)
+                            .tag(item)
                     }
                 }
-                
-                HStack {
-                    Button("Previous Page") {
-                        guard let url = observed.characters.info.prev else { return }
-                        pageURL = url
-                        fetchCharacters(url: url)
-                    }
-                    
-                    Button("Next Page") {
-                        guard let url = observed.characters.info.next else { return }
-                        pageURL = url
-                        fetchCharacters(url: url)
-                    }
-                }
+                .tabViewStyle(.page)
             }
-            .onAppear {
-                fetchCharacters(url: pageURL)
-            }
+            
         }
         
     }
     
-    func fetchCharacters(url: String) {
-        observed.fetchCharacters(url: url) { error in
-            print(error?.localizedDescription ?? "")
+    @ViewBuilder
+    func CarrosellView(page: Int) -> some View {
+        VStack {
+            ScrollView {
+                LazyVGrid(columns: addaptiveColumns, spacing: 20) {
+                    ForEach(observed.characters.results, id: \.id) { character in
+                        NavigationLink {
+                            CharactersDetails(character: .constant(character))
+                        } label: {
+                            CharacterRow(
+                                name: .constant(character.name),
+                                iconURL: .constant(character.image)
+                            )
+                            .frame(width: 170, height: 170)
+                        }
+                    }
+                }
+            }
+        }
+        .onAppear {
+            observed.fetchCharacters(pageNumber: selectedPage) { error in
+                print("\(error)")
+            }
         }
     }
 }

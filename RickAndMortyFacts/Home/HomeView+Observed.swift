@@ -11,12 +11,11 @@ extension HomeView {
     class Observed: ObservableObject {
         @Published var characters = Characters()
         
-        func fetchCharacters(url: String, completion: (Error?) -> ()) {
-            guard let url = URL(string: url) else { return }
+        func fetchCharacters(pageNumber: Int, completion: (Error?) -> ()) {
+            guard let url = URL(string: "https://rickandmortyapi.com/api/character/?page=\(pageNumber)") else { return }
             
             let task = URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data = data, error == nil else { return }
-                print(String(data: data, encoding: .utf8)!)
                 do {
                     let decoder = JSONDecoder()
                     let response = try decoder.decode(Characters.self, from: data)
