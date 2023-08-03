@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var observed = Observed()
-    @State var selectedPage = 1
+    @StateObject var observed = Observed()
+    @State var selectedPage = 0
     
-    private let addaptiveColumns = [
+    let addaptiveColumns = [
         GridItem(.adaptive(minimum: 170))
     ]
-    
     
     var body: some View {
         NavigationView {
@@ -24,7 +23,8 @@ struct HomeView: View {
                     .padding(.top)
                 
                 TabView(selection: $selectedPage) {
-                    ForEach(1..<43) { item in
+                    //TODO: fix response and wrong selected page
+                    ForEach(0..<1) { item in
                         CarrosellView(page: item)
                             .tag(item)
                     }
@@ -34,32 +34,6 @@ struct HomeView: View {
             
         }
         
-    }
-    
-    @ViewBuilder
-    func CarrosellView(page: Int) -> some View {
-        VStack {
-            ScrollView {
-                LazyVGrid(columns: addaptiveColumns, spacing: 20) {
-                    ForEach(observed.characters.results, id: \.id) { character in
-                        NavigationLink {
-                            CharactersDetails(character: .constant(character))
-                        } label: {
-                            CharacterRow(
-                                name: .constant(character.name),
-                                iconURL: .constant(character.image)
-                            )
-                            .frame(width: 170, height: 170)
-                        }
-                    }
-                }
-            }
-        }
-        .onAppear {
-            observed.fetchCharacters(pageNumber: selectedPage) { error in
-                print("\(error)")
-            }
-        }
     }
 }
 
