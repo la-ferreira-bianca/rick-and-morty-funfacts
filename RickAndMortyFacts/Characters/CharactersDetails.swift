@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CharactersDetails: View {
+    @StateObject var observed = Observed()
     @Binding var character: Character
+    
     var body: some View {
         ScrollView {
             Text(character.name)
@@ -41,11 +43,21 @@ struct CharactersDetails: View {
                 Text(character.location.name)
             }
             
-            ForEach(character.episode, id: \.self) { ep in
-                Text(ep)
+            Text(character.created)
+            
+            VStack {
+                Text("Episodios")
+                    .font(.headline)
+                if observed.isLoading {
+                    ProgressView()
+                } else {
+                    Text(observed.episode.name)
+                }
             }
             
-            Text(character.created)
+        }
+        .task {
+            await observed.fetchEpisodes(epURL: character.episode.first ?? "")
         }
     }
 }
@@ -59,12 +71,20 @@ struct CharactersDetails_Previews: PreviewProvider {
             species: "Human",
             type: "",
             gender: "Male",
-            origin: Location(name: "Earth", url: ""),
-            location: Location(name: "Earth", url: ""),
+            origin: Location(
+                name: "Earth",
+                url: ""
+            ),
+            location: Location(
+                name: "Earth",
+                url: ""
+            ),
             image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-            episode: ["https://rickandmortyapi.com/api/episode/1",
-                      "https://rickandmortyapi.com/api/episode/2",],
+            episode: [
+                "https://rickandmortyapi.com/api/episode/28"
+            ],
             url: "",
-            created: "2017-11-04T18:50:21.651Z")))
+            created: "2017-11-04T18:50:21.651Z"
+        )))
     }
 }

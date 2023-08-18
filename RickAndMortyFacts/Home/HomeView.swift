@@ -26,7 +26,7 @@ struct HomeView: View {
                     //TODO: fix response and wrong selected page
                     ForEach(0..<3) { item in
                         CarrosellView(page: item)
-                            .tag(item)
+//                            .tag(item)
                     }
                 }
                 .tabViewStyle(.page)

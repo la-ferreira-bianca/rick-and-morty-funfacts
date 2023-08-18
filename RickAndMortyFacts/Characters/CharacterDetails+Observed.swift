@@ -1,28 +1,27 @@
 //
-//  HomeView+Observed.swift
+//  CharacterDetails+Observed.swift
 //  RickAndMortyFunFacts
 //
-//  Created by Bianca Ferreira on 01/08/23.
+//  Created by Bianca Ferreira on 18/08/23.
 //
 
-import SwiftUI
+import Foundation
 
-extension HomeView {
+extension CharactersDetails {
     //MARK: - Observed
     class Observed: ObservableObject {
-        @Published var characters = Characters()
+        @Published var episode = Episode()
         //TODO: see why this published its getting error
         @Published var isLoading: Bool = false
         
-        //MARK: - Observed fuctions
-        @MainActor func fetchCharacters(pageNumber: Int) async {
+        @MainActor func fetchEpisodes(epURL: String) async {
             isLoading.toggle()
-            guard let url = URL(string: "https://rickandmortyapi.com/api/character/?page=\(pageNumber)") else { return }
+            guard let url = URL(string: epURL) else { return }
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
-                let response = try JSONDecoder().decode(Characters.self, from: data)
+                let response = try JSONDecoder().decode(Episode.self, from: data)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.characters = response
+                    self.episode = response
                     self.isLoading.toggle()
                 }
             } catch {
