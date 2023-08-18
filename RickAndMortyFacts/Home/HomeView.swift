@@ -24,7 +24,7 @@ struct HomeView: View {
                 
                 TabView(selection: $selectedPage) {
                     //TODO: fix response and wrong selected page
-                    ForEach(0..<1) { item in
+                    ForEach(0..<3) { item in
                         CarrosellView(page: item)
                             .tag(item)
                     }
