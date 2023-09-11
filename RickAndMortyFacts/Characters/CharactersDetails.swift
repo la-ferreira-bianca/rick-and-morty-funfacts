@@ -15,6 +15,8 @@ struct CharactersDetails: View {
         ScrollView {
             Text(character.name)
                 .font(.title)
+            Text("ESTER GOSTOSA")
+                .font(.caption2)
             
             AsyncImage(url: URL(string: character.image))
                 .cornerRadius(9)
@@ -27,12 +29,14 @@ struct CharactersDetails: View {
                     .resizable()
                     .frame(width: 10, height: 10)
                 Text(character.status)
+                Text(character.type ?? "")
                 
             }
             Text("Caracteristicas")
                 .font(.title2)
             Text(character.species)
             Text(character.gender)
+            
             HStack {
                 Text("Local de Origin:")
                 Text(character.origin.name)
@@ -45,15 +49,15 @@ struct CharactersDetails: View {
             
             Text(character.created)
             
-            VStack {
-                Text("Episodios")
-                    .font(.headline)
-                if observed.isLoading {
-                    ProgressView()
-                } else {
-                    Text(observed.episode.name)
-                }
-            }
+//            VStack {
+//                Text("Episodios")
+//                    .font(.headline)
+//                if observed.isLoading {
+//                    ProgressView()
+//                } else {
+//                    Text(observed.episode.name)
+//                }
+//            }
             
         }
         .task {
@@ -81,6 +85,7 @@ struct CharactersDetails_Previews: PreviewProvider {
             ),
             image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
             episode: [
+                "https://rickandmortyapi.com/api/episode/28",
                 "https://rickandmortyapi.com/api/episode/28"
             ],
             url: "",

@@ -16,23 +16,39 @@ struct HomeView: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
-                Text("Rick And Morty Fucking Fun Facts")
-                    .font(.title2)
-                    .padding(.top)
+                Image("home-logo")
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                print("teste")
+                            } label: {
+                                Image(systemName: "house")
+                            }
+                        }
+                        
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                print("teste")
+                            } label: {
+                                Image(systemName: "star")
+                            }
+                        }
+                    }
                 
                 TabView(selection: $selectedPage) {
                     //TODO: fix response and wrong selected page
-                    ForEach(0..<3) { item in
+                    ForEach(1..<7) { item in
                         CarrosellView(page: item)
-//                            .tag(item)
+                        //                            .tag(item)
                     }
                 }
                 .tabViewStyle(.page)
             }
-            
+            .background(Color.black)
         }
+        
         
     }
 }
