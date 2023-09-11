@@ -37,6 +37,54 @@ struct HomeView: View {
                         }
                     }
                 
+                HStack {
+                    Button {
+                        print("personagem")
+                    } label: {
+                        Label("Pesonagem", systemImage: "person.circle.fill")
+                            .fixedSize()
+                    }
+                    .padding()
+                    .background(Color("aqua-green"))
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
+                    
+                    Button {
+                        print("episodios")
+                    } label: {
+                        Label("Episodios", systemImage: "play.tv")
+                            .fixedSize()
+                    }
+                    .padding()
+                    .background(Color("aqua-green"))
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
+                    
+                    Button {
+                        print("localização")
+                    } label: {
+                        Label("Localização", systemImage: "network")
+                            .fixedSize()
+                    }
+                    .padding()
+                    .background(Color("aqua-green"))
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, 29)
+                
+                Button {
+                    print("Favoritos")
+                } label: {
+                    Label("Favoritos", systemImage: "heart.fill")
+                        .fixedSize()
+                }
+                .padding()
+                .background(Color("dark-green"))
+                .foregroundColor(.white)
+                .clipShape(Capsule())
+                
                 TabView(selection: $selectedPage) {
                     //TODO: fix response and wrong selected page
                     ForEach(1..<7) { item in
