@@ -21,9 +21,9 @@ extension HomeView {
                             } label: {
                                 CharacterRow(
                                     name: .constant(character.name),
-                                    iconURL: .constant(character.image)
+                                    iconURL: .constant(character.image),
+                                    status: .constant(character.status)
                                 )
-                                .frame(width: 170, height: 170)
                             }
                         }
                     }

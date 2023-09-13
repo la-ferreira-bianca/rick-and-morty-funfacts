@@ -15,7 +15,6 @@ struct CharactersDetails: View {
         ScrollView {
             Text(character.name)
                 .font(.title)
-            Text("ESTER GOSTOSA")
                 .font(.caption2)
             
             AsyncImage(url: URL(string: character.image))
